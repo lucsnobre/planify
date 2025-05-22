@@ -241,7 +241,7 @@ body {
     border-bottom: 2px solid rgba(255, 255, 255, 0.4);
     color: #FBFCF8;
     padding: 0.5rem 0.2rem;
-    font-size: 1.1rem; /* 🔼 fonte maior */
+    font-size: 1.1rem; 
   }
 
 
@@ -258,10 +258,27 @@ body {
   }
   
   .filtro-input.right-icon input[type="date"] {
-    padding-right: 10px; /* espaço pro ícone */
-    width: 100%;
+    padding-right: 20px; /* espaço pro ícone */
+    width: 50%;
   }
   
+  .filtro-input.right-icon select {
+    padding-right: 28px;
+    width: 100%;
+    appearance: none; /* remove seta nativa */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  
+.filtro-input .icone-filtro-right {
+    position: absolute;
+    right: 70px;
+    width: 30px;
+    height: 30px;
+    pointer-events:stroke;
+  }
+
   .icone-filtro-right {
     position: absolute;
     right: 130px;            /* menos distância da borda */
