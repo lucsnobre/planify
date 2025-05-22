@@ -376,3 +376,104 @@ body {
       display: none;
     }
   }
+
+
+  /*Cadastro popup*/
+
+  /* Overlay e modal de cadastro */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .modal-cadastro {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    position: relative;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  
+  .logo-cadastro {
+    width: 40px;
+    margin-bottom: 1rem;
+  }
+  
+  .modal-cadastro h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .modal-cadastro form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .modal-cadastro input {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .modal-cadastro button {
+    background-color: #B4580F;
+    color: #fff;
+    padding: 0.75rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .modal-cadastro button:hover {
+    background-color: #944509;
+  }
+  
+  .login-link {
+    margin-top: 1rem;
+  }
+  
+  .login-link a, .termos a {
+    color: #B4580F;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .termos {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 1rem;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+  }
+  
