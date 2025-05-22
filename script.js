@@ -1,7 +1,41 @@
 'use strict'
 
+//Funções pra requisitar os bglh
+document.getElementById('form-cadastro').addEventListener('submit', async function (event) {
+    event.preventDefault()
+  
+    const email = document.getElementById('email').value.trim()
+    const senha = document.getElementById('senha').value.trim()
+    const nome = document.getElementById('nome').value.trim()
+    const nickname = document.getElementById('nickname').value.trim()
+  
+  
+    const novoUsuario = {
+      email: email,
+      senha: senha,
+      nome: nome,
+      nickname: nickname
+    }
+  
+    try {
+      const resultado = await postUsuario(novoUsuario)
+      console.log('Usuário cadastrado:', resultado)
+      alert('Cadastro realizado com sucesso!')
+  
+      // Fecha o modal e limpa o formulário
+      document.getElementById('cadastro-overlay').classList.add('hidden')
+      document.getElementById('form-cadastro').reset()
+  
+    } catch (error) {
+      console.error('Erro ao cadastrar:', error)
+      alert('Erro ao cadastrar usuário. Verifique os dados e tente novamente.')
+    }
+  })
+  
 
-//Funções
+
+
+//FunçõesAPI
 async function getUsuarios(){
     const url = `http://10.107.134.19:8080/v1/planify/usuario`
 

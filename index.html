@@ -6,6 +6,7 @@
   <title>Planify - Eventos</title>
   <link rel="stylesheet" href="style.css">
   <script src="./script.js" defer></script>
+  <link rel="shortcut icon" href="./img/colorido.png" type="image/x-icon">
 </head>
 <body>
   <!-- Header -->
@@ -84,11 +85,11 @@
       <h2>Fazer Cadastro</h2>
       <p>Bem-vindo! Crie sua conta agora mesmo.</p>
   
-      <form>
-        <input type="text" placeholder="Nome completo" required>
-        <input type="email" placeholder="E-mail" required>
-        <input type="password" placeholder="Senha" required>
-        <input type="password" placeholder="Confirmar senha" required>
+      <form id="form-cadastro">
+          <input type="email" id="email" placeholder="E-mail" required>
+          <input type="password" id="senha" placeholder="Senha" required>
+          <input type="text" id="nome" placeholder="Nome completo" required>
+        <input type="text" id="nickname" placeholder="Nickname" required>
         <button type="submit">Cadastrar</button>
       </form>
   
