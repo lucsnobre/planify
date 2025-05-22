@@ -58,6 +58,25 @@ body {
     box-shadow: 0 4px 6px rgba(0,0,0,0.15);
   }
   
+  #botaoCadastrar {
+    padding: 0.5rem 3rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    background-color: rgba(180, 88, 15, 0.76);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  #botaoCadastrar:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+  }
+  
+
   .hero {
     position: relative;
     width: 100%;
@@ -413,13 +432,25 @@ body {
   }
   
   .logo-cadastro {
-    width: 40px;
-    margin-bottom: 1rem;
+    width: 100px;
+    margin-bottom: 1.8rem;
+    padding-top: 10px;
   }
   
-  .modal-cadastro h2 {
-    font-size: 1.8rem;
-    margin-bottom: 0.3rem;
+  .modal-cadastro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    position: relative;
+    text-align: left;
+  }
+  .modal-cadastro h2,
+  .modal-cadastro p {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 0.5rem;
   }
   
   .modal-cadastro form {
@@ -429,11 +460,17 @@ body {
     margin: 1rem 0;
   }
   
-  .modal-cadastro input {
-    padding: 0.75rem;
+  
+.modal-cadastro input {
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    padding: 0.75rem 0.2rem;
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    background-color: transparent;
+    color: #333;
+    transition: border-color 0.3s ease;
+    width: 100%;
   }
   
   .modal-cadastro button {
