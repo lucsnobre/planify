@@ -1,4 +1,4 @@
-const abrirCadastroBtn = document.querySelector('btn cadastrar'); 
+const abrirCadastroBtn = document.querySelector('#botaoCadastrar'); 
 const fecharCadastroBtn = document.querySelector('#fecharCadastro');
 const overlayCadastro = document.querySelector('#cadastro-overlay');
 
