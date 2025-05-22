@@ -257,18 +257,14 @@ body {
     align-items: center;
   }
   
-  .filtro-input.right-icon input[type="date"] {
-    padding-right: 20px; /* espaço pro ícone */
-    width: 50%;
-  }
-  
-  .filtro-input.right-icon select {
-    padding-right: 28px;
-    width: 100%;
-    appearance: none; /* remove seta nativa */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
+  .filtro-input.right-icon select,
+.filtro-input.right-icon input[type="date"] {
+  padding-right: 36px; /* Espaço pro ícone */
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
 
   
 .filtro-input .icone-filtro-right {
