@@ -939,13 +939,16 @@ input[type="date"]::-moz-calendar-picker-indicator {
   font-family: Inter, sans-serif;
   color: #333;
   margin-top: 300px;
+  
+  
 }
 
 .eventos-inferior h2 {
   font-size: 2.2rem;
   color: black;
   font-family: 'Inter', sans-serif;
-  margin-bottom: 40px;
+  margin-bottom: 87px;
+  margin-left: 77px;
   text-align: start;
 }
 
