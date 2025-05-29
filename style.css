@@ -1018,13 +1018,13 @@ input[type="date"]::-moz-calendar-picker-indicator {
 }
 
 .btn-curtir img {
-  width: 24px;
-  height: 24px;
-  transition: filter 0.3s;
+  width: 28px;
+  height: 28px;
+  transition: filter 0.5s;
 }
 
 .btn-curtir:hover img {
-  filter: brightness(0.8);
+  filter:invert(1);
 }
 
 
