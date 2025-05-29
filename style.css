@@ -1083,7 +1083,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
 }
 
 .evento-info a:hover {
-  background-color:  rgba(163, 93, 36, 0.76);
+  background-color:  rgba(170, 116, 72, 0.76);
 }
 /* Scroll */
 :root {
