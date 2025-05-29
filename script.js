@@ -164,7 +164,7 @@ document.getElementById('abrirCadastroViaLogin').addEventListener('click', (even
     document.getElementById('cadastro-overlay').classList.remove('hidden')
 })
 
-// Lógica do login
+// crud login
 document.getElementById('form-login').addEventListener('submit', async function (event) {
     event.preventDefault()
 
@@ -240,7 +240,7 @@ document.querySelectorAll('.btn-curtir').forEach(button => {
     });
 });
 
-//Login
+//pop up de Login
 
 document.getElementById('form-login').addEventListener('submit', async function (event) {
     event.preventDefault()
