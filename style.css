@@ -413,7 +413,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
 }
 
 .evento-card button {
-  background: #B4580F;
+  background: transparent;
   color: white;
   border: none;
   border-radius: 50%;
@@ -929,6 +929,8 @@ input[type="date"]::-moz-calendar-picker-indicator {
   margin: 60px auto 40px auto;
   border-radius: 4px;
   margin-top:100px;
+  align-items: center;
+
 }
 
 /* Seção inferior de eventos */
