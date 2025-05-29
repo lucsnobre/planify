@@ -26,8 +26,9 @@ body {
 }
 
 .logo img {
-  height: 150px;
-  padding-top: 17px;
+  height: 170px;
+  padding-top: 47px;
+  padding-left: 40px;
   width: auto;
   display: block;
 }
@@ -115,16 +116,15 @@ body {
 }
 
 .carousel-image.left {
-  transform: translateX(-10px) scaleX(0.75); /* Mais afastada e estreita */
+  transform: translateX(170px) scaleY(1.2); /* Mais afastada e estreita */
   z-index: 2;
-  opacity: 0.6;
+  
 }
 
 /* Imagem da direita */
 .carousel-image.right {
-  transform: translateX(10px) scaleX(0.75);
+  transform: translateX(-200px) scaleY(1.2);
   z-index: 2;
-  opacity: 0.6;
 }
 
 
@@ -244,7 +244,7 @@ body {
   position: absolute;
   bottom: -377px;
   /* era -100px */
-  left: 48%;
+  left: 49%;
   transform: translateX(-50%);
   width: 71%;
   /* era 90% */
@@ -940,7 +940,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
 }
 
 .eventos-inferior h2 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: black;
   font-family: 'Inter', sans-serif;
   margin-bottom: 40px;
