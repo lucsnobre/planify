@@ -99,6 +99,7 @@ body {
     font-size: 24px;
     font-weight: 700;
     color: white;
+    font-family: 'Inter', sans-serif;
 }
 
 .logout-button {
@@ -126,6 +127,7 @@ body {
     margin-bottom: 15px;
     position: relative;
     z-index: 2;
+    font-family: 'Inter', sans-serif;
 }
 
 .title-underline {
@@ -172,6 +174,7 @@ body {
     font-weight: 700;
     color: #333;
     margin-bottom: 25px;
+    font-family: 'Inter', sans-serif;
 }
 
 /* Form Styles */
@@ -209,6 +212,7 @@ body {
     color: #666;
     margin-bottom: 8px;
     font-size: 14px;
+    font-family: 'Inter', sans-serif;
 }
 
 .form-group input {
@@ -220,6 +224,7 @@ body {
     background: rgba(255, 255, 255, 0.8);
     transition: all 0.3s ease;
     backdrop-filter: blur(5px);
+    font-family: 'Inter', sans-serif;
 }
 
 .form-group input:focus {
@@ -252,6 +257,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+    font-family: 'Inter', sans-serif;
 }
 
 .action-btn:hover {
@@ -272,6 +278,7 @@ body {
     align-self: flex-start;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+    font-family: 'Inter', sans-serif;
 }
 
 .save-button:hover {
@@ -289,6 +296,7 @@ body {
         flex-direction: column;
         gap: 15px;
         text-align: center;
+        font-family: 'Inter', sans-serif;
     }
 
     .logo {
