@@ -249,7 +249,7 @@ document.getElementById('form-login').addEventListener('submit', async function 
     const senha = document.getElementById('login-senha').value.trim()
 
     try {
-        const url = `http://10.107.144.9:8080/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+        const url = `http://10.107.134.4:8080/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
         const response = await fetch(url)
 
         if (!response.ok) {
@@ -291,7 +291,7 @@ document.getElementById('form-recuperar-senha').addEventListener('submit', async
     const email = document.getElementById('recuperar-email').value.trim()
 
     try {
-        const response = await fetch(`http://10.107.144.9:8080/v1/planify/recuperar-senha/${email}`, {
+        const response = await fetch(`http://10.107.144.19:8080/v1/planify/recuperar-senha/${email}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
