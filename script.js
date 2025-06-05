@@ -475,13 +475,13 @@ const cidadesPorEstado = {
 };
 
 const selectEstado = document.getElementById('estado');
-const selectCidade = document.getElementById('cidade');
 
-if (selectEstado && selectCidade) {
+if (selectEstado) {
   selectEstado.addEventListener('change', function() {
     const estado = this.value;
-    selectCidade.innerHTML = '';
     if (estado && cidadesPorEstado[estado]) {
+      const selectCidade = document.getElementById('cidade');
+      selectCidade.innerHTML = '';
       cidadesPorEstado[estado].forEach(cidade => {
         const option = document.createElement('option');
         option.value = cidade;
@@ -490,6 +490,7 @@ if (selectEstado && selectCidade) {
       });
       selectCidade.disabled = false;
     } else {
+      const selectCidade = document.getElementById('cidade');
       selectCidade.innerHTML = '<option value="">Selecione o estado primeiro</option>';
       selectCidade.disabled = true;
     }
@@ -759,3 +760,61 @@ if (inputQuando && menuCalendarioCascata) {
     }
   });
 }
+
+// --- Carregar eventos dinamicamente ---
+async function carregarEventos() {
+  const container = document.querySelector('.eventos-container');
+  if (!container) return;
+  container.innerHTML = '<p style="color:#fff">Carregando eventos...</p>';
+  try {
+    const response = await fetch('http://10.107.134.4:8080/v1/planify/evento');
+    if (!response.ok) throw new Error('Erro ao buscar eventos');
+    const data = await response.json();
+    console.log('Eventos retornados pela API:', data);
+    const eventos = data.eventos || data;
+    if (!eventos.length) {
+      container.innerHTML = '<p style="color:#fff">Nenhum evento encontrado.</p>';
+      return;
+    }
+    container.innerHTML = '';
+    eventos.forEach(evento => {
+      container.innerHTML += `
+        <div class="evento-card">
+          <button class="btn-curtir" title="Salvar evento">
+            <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
+          </button>
+          <img class="evento-img" src="${evento.imagem || './img/placeholder.jpg'}" alt="Imagem do Evento">
+          <div class="evento-info">
+            <h3>${evento.nome || ''}</h3>
+            <p>${evento.data ? formatarData(evento.data) : ''}${evento.cidade ? ' - ' + evento.cidade : ''}</p>
+            ${evento.descricao ? `<p style='font-size:0.95em;color:#444;margin-top:6px;'>${evento.descricao}</p>` : ''}
+            ${evento.endereco ? `<p style='font-size:0.92em;color:#666;margin-top:2px;'>${evento.endereco}</p>` : ''}
+            ${evento.preco ? `<p style='font-size:1em;color:#b4580f;margin-top:2px;'>R$ ${evento.preco}</p>` : ''}
+          </div>
+          <div class="evento-arrow">
+            <img src="./img/seta.png" alt="Ver mais">
+          </div>
+        </div>
+      `;
+    });
+  } catch (err) {
+    console.error('Erro ao carregar eventos:', err);
+    container.innerHTML = `
+      <div style="text-align: center; padding: 20px; color: #fff;">
+        <p style="margin-bottom: 10px;">Não foi possível carregar os eventos.</p>
+        <p style="font-size: 0.9em; color: #ccc;">O servidor pode estar indisponível no momento.</p>
+        <button onclick="carregarEventos()" style="margin-top: 15px; padding: 8px 16px; background: #FF7100; border: none; border-radius: 4px; color: white; cursor: pointer;">
+          Tentar novamente
+        </button>
+      </div>
+    `;
+  }
+}
+
+function formatarData(dataStr) {
+  const data = new Date(dataStr);
+  if (isNaN(data)) return '';
+  return data.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' });
+}
+
+window.addEventListener('DOMContentLoaded', carregarEventos);
