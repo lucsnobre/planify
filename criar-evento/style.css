@@ -1172,10 +1172,10 @@ select:focus ~ label {
 /* Ajuste de Alinhamento para a Primeira Form-Row */
 .header-container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 20px;
+    margin-bottom: 20px;
 }
 
 .header-container h1 {
@@ -1195,7 +1195,7 @@ select:focus ~ label {
     grid-template-columns: 1fr;
     gap: 25px;
     align-items: start;
-    padding: 20px;
+    padding: 0 20px;
 }
 
 @media (min-width: 768px) {
