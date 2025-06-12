@@ -19,6 +19,195 @@ body {
   z-index: 10;
 }
 
+.logo-search-container {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaço entre o logo e a barra de pesquisa */
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute; /* Mantido para o container do ícone */
+  left: 18px; 
+  top: 50%;
+  transform: translateY(-50%);
+  /* width e height movidos para .search-icon-img */
+  cursor: pointer;
+  z-index: 10; /* Container do ícone acima de tudo */
+  display: flex; /* Para alinhar a imagem interna se necessário */
+  align-items: center;
+  justify-content: center;
+  /* A transição de 'left' permanece aqui, pois é o container que se move */
+  transition: left 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.search-icon-img {
+  width: 28px; /* Ícone um pouco menor para estética */
+  height: 28px;
+  display: block; /* Garante que a imagem não tenha espaçamento extra */
+  transition: filter 0.3s ease-in-out, transform 0.3s ease;
+  filter: grayscale(0.2) brightness(0.9) contrast(1.1); /* Efeito mais sutil e moderno */
+}
+
+/* Círculo ao redor do ícone com efeito Liquid Glass */
+.search-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px; /* Círculo um pouco maior */
+  height: 60px;
+  background: rgba(255, 255, 255, 0.08); /* Fundo branco MAIS translúcido para glass effect */
+  border-radius: 50%;
+  z-index: -1; /* DEVE estar atrás do ícone, mas acima do fundo da barra */
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out, background-color 0.3s ease-in-out, transform 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6), backdrop-filter 0.3s ease;
+  backdrop-filter: blur(15px); /* Blur AINDA mais intenso para liquid glass */
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Borda um pouco mais sutil */
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.08), inset 0 0 8px rgba(255, 255, 255, 0.35); /* Sombra interna e externa suave ajustada */
+}
+
+.search-icon:hover::before { /* Estilo do círculo no hover do container */
+  background: rgba(255, 255, 255, 0.15); /* Levemente mais opaco no hover */
+  backdrop-filter: blur(14px); 
+  -webkit-backdrop-filter: blur(14px);
+  transform: translate(-50%, -50%) scale(1.05); /* Leve aumento no hover */
+}
+
+.search-icon:hover .search-icon-img { /* Estilo da imagem no hover do container */
+  transform: scale(1.1); /* Ícone aumenta um pouco no hover, sem movimento vertical */
+}
+
+/* Quando a barra de pesquisa está ativa */
+.search-icon.active { /* Estilo do container do ícone quando ativo */
+  left: calc(100% - 48px); /* Posição do container do ícone dentro da barra ativa */
+  /* filter e transform para a imagem foram movidos para .search-icon.active .search-icon-img */
+}
+
+.search-icon.active .search-icon-img {
+  filter: grayscale(0) brightness(1) contrast(1); /* Ícone com cor total e nítido */
+  transform: scale(1); /* Reset do scale do hover, garantindo que não haja transformações indesejadas */
+}
+
+.search-icon.active::before { /* Estilo do círculo quando o container do ícone está ativo */
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7); /* Círculo desaparece com animação de encolhimento */
+  pointer-events: none; /* Desabilita interações com o círculo invisível */
+}
+
+.search-bar {
+  font-family: 'Inter', sans-serif;
+  padding: 16px 28px 16px 75px; /* Padding: Top/Bottom, Direita, Esquerda (para ícone) */
+  border: 1.5px solid rgba(255, 255, 255, 0.25); /* Borda translúcida, estilo iOS */
+  border-radius: 40px; /* Bordas bem arredondadas */
+  width: 0;
+  opacity: 0;
+  transition: width 0.6s cubic-bezier(0.77, 0, 0.175, 1), 
+              opacity 0.5s ease-in-out, 
+              background-color 0.4s ease-in-out, 
+              box-shadow 0.4s ease-in-out, 
+              backdrop-filter 0.4s ease-in-out,
+              border-color 0.3s ease;
+  font-size: 1.15rem; /* Tamanho da fonte ligeiramente maior */
+  background-color: rgba(250, 250, 250, 0.65); /* Fundo principal com alta translucidez */
+  backdrop-filter: blur(16px); /* Efeito Liquid Glass pronunciado */
+  -webkit-backdrop-filter: blur(16px);
+  color: #2c221e; /* Cor do texto escura para contraste */
+  box-shadow: 0 8px 32px rgba(150, 70, 10, 0.12), /* Sombra principal mais suave */
+              inset 0 1px 2px rgba(255, 255, 255, 0.5); /* Sombra interna para efeito de profundidade */
+  pointer-events: none;
+  outline: none; /* Remove outline padrão */
+}
+
+.search-bar::placeholder {
+  color: rgba(44, 34, 30, 0.55); /* Placeholder mais integrado */
+  font-weight: 400;
+}
+
+.search-bar:focus {
+  outline: none; /* Já definido acima, mas reforça */
+  border-color: rgba(223, 109, 20, 0.4); /* Borda com cor do tema ao focar */
+  background-color: rgba(250, 250, 250, 0.75); /* Levemente mais opaco ao focar */
+  box-shadow: 0 10px 35px rgba(180, 88, 15, 0.18), /* Sombra mais pronunciada no foco */
+              inset 0 1px 3px rgba(255, 255, 255, 0.6);
+}
+
+.search-bar.active {
+  width: 350px; /* Largura da barra ativa */
+  opacity: 1;
+  pointer-events: auto; /* Permite digitação quando ativa */
+}
+
+.search-container .search-icon.active + .search-bar {
+    width: 320px;
+    opacity: 1;
+}
+
+/* O estilo .search-icon.active já foi definido acima para mover o ícone e esconder o círculo */
+
+.top-bar.logged-in {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto;
+  padding-right: 2rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.profile-img:hover {
+  transform: scale(1.05);
+}
+
+.btn.criar-evento {
+  padding: 0.7rem 2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: rgba(180, 88, 15, 0.76);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn.criar-evento:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+#header-logged-in .logo img {
+  height: 80px;
+  padding-top: 10px;
+  padding-left: 140px;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -260,17 +449,118 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  
+  position: relative;
+  width: 100%;
 }
 
 .icone-filtro {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
-  
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 2;
 }
 
+.icone-filtro-right {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 2;
+}
 
+.filtro-box select,
+.filtro-box input[type="date"],
+.filtro-box input[type="text"] {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  padding: 0.5rem 2.5rem 0.5rem 0.2rem;
+  font-size: 1.1rem;
+  width: 100%;
+  transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  z-index: 1;
+}
+
+.filtro-box select:focus,
+.filtro-box input[type="date"]:focus,
+.filtro-box input[type="text"]:focus {
+  outline: none;
+  border-bottom-color: #fff;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.filtro-box select option {
+  background: #FF7100;
+  color: #fff;
+}
+
+/* Ajuste específico para o ícone do tipo de evento */
+#tipo-evento-filtro-box .icone-filtro-right {
+  right: 0;
+  width: 22px;
+  height: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Ajuste específico para o ícone do estado */
+#estado-filtro-box .icone-filtro-right {
+  right: 0;
+  width: 22px;
+  height: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Ajuste específico para o ícone do calendário */
+#quando-filtro-box .icone-filtro-right {
+  right: 0;
+  width: 22px;
+  height: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Efeito hover nos ícones */
+.icone-filtro:hover,
+.icone-filtro-right:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Ajuste para o input de data */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 3;
+}
 
 .filtro-box {
   display: flex;
@@ -300,71 +590,6 @@ body {
   font-size: 1.4rem;
   margin-bottom: 0.4rem;
   color: #FBFCF8;
-}
-
-.filtro-box select,
-.filtro-box input[type="date"] {
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
-  color: #222;
-  padding: 0.5rem 0.2rem;
-  font-size: 1.1rem;
-}
-
-
-.filtro-box select:focus,
-.filtro-box input[type="date"]:focus {
-  outline: none;
-  border-bottom-color: #FBFCF8;
-  
-}
-
-.filtro-input.right-icon {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.filtro-input.right-icon select,
-.filtro-input.right-icon input[type="date"] {
-  padding-right: 36px;
-  /* Espaço pro ícone */
-  width: 100%;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  color: #222;
-}
-
-
-.filtro-input .icone-filtro-right {
-  position: absolute;
-  right: 70px;
-  width: 30px;
-  height: 30px;
-  pointer-events: stroke;
-}
-
-.icone-filtro-right {
-  position: absolute;
-  right: 130px;
-  /* menos distância da borda */
-  width: 24px;
-  /* ícone maior */
-  height: 24px;
-  pointer-events: none;
-}
-
-/* Remove ícone padrão */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0;
-  pointer-events: none;
-}
-
-input[type="date"]::-moz-calendar-picker-indicator {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .eventos-ativos {
@@ -1470,4 +1695,56 @@ select {
 #quando-filtro-box .filtro-input input[type="text"]:focus {
   outline: none;
   border-bottom-color: #FBFCF8;
+}
+
+/* Deixar o texto e o placeholder do campo #quando brancos */
+#quando,
+#quando::placeholder {
+  color: #fff !important;
+  opacity: 1;
+}
+
+/* Animações para Modais */
+.modal-overlay {
+  /* ... estilos existentes ... */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.modal-overlay:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.modal-content {
+  /* ... estilos existentes ... */
+  transform: scale(0.9) translateY(-20px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) .modal-content {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Efeito de hover e clique nos botões de autenticação */
+.auth-buttons .btn,
+#botaoCadastrar {
+  /* ... estilos existentes ... */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease; /* Adicionada transição para background-color */
+}
+
+.auth-buttons .btn:hover,
+#botaoCadastrar:hover {
+  /* ... estilos existentes ... */
+  background-color: rgba(180, 88, 15, 0.9); /* Escurece um pouco no hover */
+}
+
+.auth-buttons .btn:active,
+#botaoCadastrar:active {
+  transform: translateY(0px) scale(0.98); /* Efeito de clique mais sutil */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }

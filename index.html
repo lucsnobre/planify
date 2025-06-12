@@ -12,12 +12,41 @@
 
 <body>
   <header class="top-bar">
-    <div class="logo">
-      <img src="./img/planify.png" alt="Planify Logo" />
+    <div class="logo-search-container">
+      <div class="logo">
+        <img src="./img/planify.png" alt="Planify Logo" />
+      </div>
+      <div class="search-container">
+        <div class="search-icon" id="search-icon">
+          <img src="./img/lupaPesquisa.png" alt="Ícone de Pesquisa" class="search-icon-img">
+        </div>
+        <input type="text" class="search-bar" id="search-bar" placeholder="Pesquisar eventos...">
+      </div>
     </div>
     <div class="auth-buttons">
       <button class="btn entrar">Entrar</button>
       <button id="botaoCadastrar">Cadastrar</button>
+    </div>
+  </header>
+
+  <!-- Header para usuário logado -->
+  <header class="top-bar logged-in" id="header-logged-in" style="display: none;">
+    <div class="logo-search-container">
+      <div class="logo">
+        <img src="./img/planify.png" alt="Planify Logo" />
+      </div>
+      <div class="search-container">
+        <div class="search-icon" id="search-icon-logged-in">
+          <img src="./img/lupaPesquisa.png" alt="Ícone de Pesquisa" class="search-icon-img">
+        </div>
+        <input type="text" class="search-bar" id="search-bar-logged-in" placeholder="Pesquisar eventos...">
+      </div>
+    </div>
+    <div class="user-actions">
+      <button class="btn criar-evento">Criar Evento</button>
+      <div class="user-info">
+        <img src="./img/pau nu jugu.jpg" alt="Foto do Usuário" class="profile-img" id="user-profile-img">
+      </div>
     </div>
   </header>
 
@@ -69,7 +98,7 @@
       </div>
 
       <div class="filtro-box" id="estado-filtro-box">
-        <label for="estado">Estado</label>
+        <label for="estado">Onde?</label>
         <div class="filtro-input right-icon">
           <select id="estado" autocomplete="off">
             <option value="">Selecione o estado</option>
@@ -85,15 +114,7 @@
         </div>
         <!-- Menu lateral de estados e cidades, inicialmente oculto -->
         <div class="menu-cidades-cascata" id="menu-cidades-cascata" style="display:none;">
-          <ul class="estados-lista">
-            <li data-estado="PE">Pernambuco</li>
-            <li data-estado="SP">São Paulo</li>
-            <li data-estado="RJ">Rio de Janeiro</li>
-            <li data-estado="MG">Minas Gerais</li>
-            <li data-estado="BA">Bahia</li>
-            <li data-estado="RS">Rio Grande do Sul</li>
-            <!-- Adicione outros estados se quiser -->
-          </ul>
+          <ul class="estados-lista"></ul>
           <ul class="cidades-lista"></ul>
         </div>
       </div>
