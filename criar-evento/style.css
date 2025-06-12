@@ -993,125 +993,51 @@ select:focus ~ label {
     transform: translateX(2px);
 }
 
-/* Estilo base para todas as form-rows */
+/* Estilo de Cartões para Formulários */
 .form-row {
     display: flex;
     flex-direction: column;
-    gap: 32px;
-    margin-bottom: 40px;
-    background: rgba(255, 255, 255, 0.35);
-    padding: 40px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 
-        0 8px 32px rgba(192, 131, 59, 0.08),
-        inset 0 2px 4px rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.form-row::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.2) 0%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    pointer-events: none;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-row:hover {
-    background: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 
-        0 12px 40px rgba(192, 131, 59, 0.12),
-        inset 0 2px 6px rgba(255, 255, 255, 0.6);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Layout específico para diferentes tipos de form-rows */
-.form-row.header-row {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 40px;
-    align-items: start;
-}
-
-.form-row.description-row {
-    background: rgba(255, 255, 255, 0.4);
-}
-
-.form-row.location-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
-}
-
-/* Grupos de form */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    position: relative;
-}
-
-.form-group label {
-    font-size: 0.95rem;
-    color: #2c221e;
-    font-weight: 600;
-    margin-bottom: 4px;
-    transition: all 0.3s ease;
+.form-row label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
     display: flex;
     align-items: center;
-    gap: 8px;
 }
 
-.form-group label i {
-    color: #C83B1B;
-    font-size: 1.1rem;
-    opacity: 0.9;
+.form-row label::before {
+    content: url('icon-url.svg'); /* Substitua por URLs de ícones reais */
+    margin-right: 8px;
 }
 
-.form-group label.required::after {
-    content: '*';
-    color: #C83B1B;
-    margin-left: 4px;
+.form-row input,
+.form-row select,
+.form-row textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #f9f9f9;
 }
 
-/* Inputs estilizados */
-.form-group input,
-.form-group textarea,
-.form-group select {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1.5px solid rgba(192, 131, 59, 0.15);
-    border-radius: 16px;
-    padding: 16px 20px;
-    font-size: 1rem;
-    color: #2c221e;
-    transition: all 0.3s ease;
-    box-shadow: 
-        0 4px 12px rgba(192, 131, 59, 0.06),
-        inset 0 2px 4px rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    background: rgba(255, 255, 255, 0.7);
-    border-color: #C83B1B;
-    box-shadow: 
-        0 8px 20px rgba(192, 131, 59, 0.1),
-        inset 0 2px 4px rgba(255, 255, 255, 0.6);
-    transform: translateY(-1px);
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+    border-color: #FF7100;
+    box-shadow: 0 0 5px rgba(255, 113, 0, 0.5);
 }
 
 /* Grid para campos de endereço */
@@ -1180,5 +1106,100 @@ select:focus ~ label {
     
     .address-grid .form-group:nth-child(2n) {
         grid-column: 1;
+    }
+}
+
+/* Layout de Grade para Formulários */
+.form-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    align-items: start;
+    padding: 20px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-row label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+    border-color: #FF7100;
+    box-shadow: 0 0 5px rgba(255, 113, 0, 0.5);
+}
+
+/* Ajustes para responsividade */
+@media (max-width: 768px) {
+    .form-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Efeitos de Animação na Página */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Ajuste de Alinhamento para a Primeira Form-Row */
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.header-container h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.header-container p {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    align-items: start;
+    padding: 20px;
+}
+
+@media (min-width: 768px) {
+    .form-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
 }
