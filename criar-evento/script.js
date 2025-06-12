@@ -172,4 +172,341 @@ function createParticles(e, btn) {
             particle.remove();
         }, 800);
     }
-} 
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Elementos do DOM
+  const imageUpload = document.querySelector('.image-upload-modern');
+  const imagePreview = document.querySelector('.image-preview-modern');
+  const imageInput = document.querySelector('#event-image');
+  const form = document.querySelector('form');
+  const backgroundGradient = document.querySelector('.background-gradient');
+  const ticketOptions = document.querySelectorAll('.ticket-type input[type="radio"]');
+
+  // Efeito de brilho interativo do Windows Aero
+  document.addEventListener('mousemove', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    document.documentElement.style.setProperty('--mouse-x', `${x}px`);
+    document.documentElement.style.setProperty('--mouse-y', `${y}px`);
+    
+    backgroundGradient.classList.add('active');
+  });
+
+  document.addEventListener('mouseleave', () => {
+    backgroundGradient.classList.remove('active');
+  });
+
+  // Efeito de hover nos inputs
+  const inputs = document.querySelectorAll('input, textarea, select');
+  inputs.forEach(input => {
+    input.addEventListener('focus', () => {
+      input.parentElement.style.transform = 'translateY(-2px)';
+      input.parentElement.style.boxShadow = '0 8px 25px rgba(200, 59, 27, 0.12)';
+    });
+
+    input.addEventListener('blur', () => {
+      input.parentElement.style.transform = 'translateY(0)';
+      input.parentElement.style.boxShadow = 'none';
+    });
+  });
+
+  // Upload de imagem com preview
+  if (imageUpload) {
+    imageUpload.addEventListener('click', () => imageInput.click());
+
+    imageUpload.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      imageUpload.classList.add('dragover');
+    });
+
+    imageUpload.addEventListener('dragleave', () => {
+      imageUpload.classList.remove('dragover');
+    });
+
+    imageUpload.addEventListener('drop', (e) => {
+      e.preventDefault();
+      imageUpload.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        handleImageUpload(file);
+      }
+    });
+
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        handleImageUpload(file);
+      }
+    });
+  }
+
+  function handleImageUpload(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagePreview.innerHTML = `
+        <img src="${e.target.result}" alt="Preview" class="preview-image">
+        <button type="button" class="remove-image" aria-label="Remover imagem">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+      imageUpload.classList.add('has-image');
+      
+      // Adiciona efeito de brilho na imagem
+      const previewImage = imagePreview.querySelector('.preview-image');
+      previewImage.addEventListener('mousemove', (e) => {
+        const rect = previewImage.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        previewImage.style.setProperty('--x', `${x}px`);
+        previewImage.style.setProperty('--y', `${y}px`);
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Remover imagem
+  imagePreview.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-image') || e.target.closest('.remove-image')) {
+      imagePreview.innerHTML = '';
+      imageInput.value = '';
+      imageUpload.classList.remove('has-image');
+    }
+  });
+
+  // Validação do formulário
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    let isValid = true;
+    const requiredFields = form.querySelectorAll('[required]');
+    
+    requiredFields.forEach(field => {
+      if (!field.value.trim()) {
+        isValid = false;
+        field.classList.add('error');
+        
+        // Adiciona efeito de shake no campo com erro
+        field.style.animation = 'none';
+        field.offsetHeight; // Força reflow
+        field.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+      } else {
+        field.classList.remove('error');
+      }
+    });
+
+    if (isValid) {
+      // Simula envio do formulário
+      const submitButton = form.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
+
+      setTimeout(() => {
+        showNotification('Evento publicado com sucesso!', 'success');
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Publicar Evento';
+        form.reset();
+        imagePreview.innerHTML = '';
+        imageUpload.classList.remove('has-image');
+      }, 2000);
+    } else {
+      showNotification('Por favor, preencha todos os campos obrigatórios.', 'error');
+    }
+  });
+
+  // Sistema de notificações
+  function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+      <span>${message}</span>
+    `;
+
+    document.body.appendChild(notification);
+
+    // Adiciona efeito de entrada
+    setTimeout(() => notification.classList.add('show'), 10);
+
+    // Remove a notificação após 3 segundos
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
+  // Validação de CEP
+  const cepInput = document.querySelector('#cep');
+  if (cepInput) {
+    cepInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 8) value = value.slice(0, 8);
+      e.target.value = value.replace(/(\d{5})(\d{3})/, '$1-$2');
+    });
+
+    cepInput.addEventListener('blur', async () => {
+      const cep = cepInput.value.replace(/\D/g, '');
+      if (cep.length === 8) {
+        try {
+          const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+          const data = await response.json();
+          
+          if (!data.erro) {
+            document.querySelector('#endereco').value = data.logradouro;
+            document.querySelector('#bairro').value = data.bairro;
+            document.querySelector('#cidade').value = data.localidade;
+            document.querySelector('#estado').value = data.uf;
+            
+            // Adiciona efeito de sucesso
+            const fields = document.querySelectorAll('#endereco, #bairro, #cidade, #estado');
+            fields.forEach(field => {
+              field.style.animation = 'none';
+              field.offsetHeight;
+              field.style.animation = 'successPulse 0.5s ease-out';
+            });
+          }
+        } catch (error) {
+          console.error('Erro ao buscar CEP:', error);
+        }
+      }
+    });
+  }
+
+  // Adiciona estilos para as notificações e animações
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+
+    @keyframes successPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateX(120%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      border-left: 4px solid #22c55e;
+    }
+
+    .notification.error {
+      border-left: 4px solid #ef4444;
+    }
+
+    .notification i {
+      font-size: 1.25rem;
+    }
+
+    .notification.success i {
+      color: #22c55e;
+    }
+
+    .notification.error i {
+      color: #ef4444;
+    }
+
+    .preview-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preview-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(
+        circle 100px at var(--x, 50%) var(--y, 50%),
+        rgba(255, 255, 255, 0.2),
+        transparent 80%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .preview-image:hover::after {
+      opacity: 1;
+    }
+
+    .dragover {
+      border-color: var(--primary-color) !important;
+      background: rgba(200, 59, 27, 0.05) !important;
+      transform: scale(1.02);
+    }
+
+    .error {
+      border-color: var(--error-color) !important;
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    .has-image {
+      padding: 0;
+      border: none;
+    }
+
+    .has-image .image-placeholder-modern {
+      display: none;
+    }
+
+    .preview-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .remove-image {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .remove-image:hover {
+      background: var(--error-color);
+      color: white;
+      transform: scale(1.1);
+    }
+  `;
+  document.head.appendChild(style);
+}); 
